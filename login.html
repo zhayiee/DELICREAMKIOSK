@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cream Deli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffe4ec;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box, .main-content {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .login-box button {
+      padding: 10px 20px;
+      background: #f5a9c0;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .login-box button:hover {
+      background: #ff2e72;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #f5a9c0;
+      color: black;
+      padding: 20px;
+      animation: slideIn 1s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul li a {
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #ff2e72;
+      transform: translateX(5px);
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #ff2e72;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #cc1f59;
+    }
+
+    .main {
+      flex: 1;
+      background-color: #ffe4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1s ease-in;
+      overflow-y: auto;
+    }
+
+    .main h1, .main h2 {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .main h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    .main h2 {
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .main p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .inventory-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+
+    .inventory-table th, .inventory-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .forms-container {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .form-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #f5a9c0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ff2e72;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(0); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade {
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN FORM -->
+  <div class="login-box" id="loginBox">
+    <h2>Login to Cream Deli</h2>
+    <input type="text" id="username" placeholder="Username"/>
+    <input type="password" id="password" placeholder="Password"/>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="container hidden" id="dashboard">
+    <div class="sidebar">
+      <div>
+        <h2>DASHBOARD</h2>
+        <ul>
+          <li><a onclick="showPage('home')">HOME</a></li>
+          <li><a onclick="showPage('inventory')">INVENTORY</a></li>
+          <li><a onclick="showPage('record')">RECORD</a></li>
+        </ul>
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div class="main" id="content">
+      <h1>DELI</h1>
+      <h2>CREAM</h2>
+      <p>Ice cream, you scream!</p>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if ((user === 'admin' || user === 'staff') && pass === '1234') {
+        document.getElementById('loginBox').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        showPage("home");
+      } else {
+        alert('Invalid username or password');
+      }
+    }
+
+    function logout() {
+      document.getElementById('dashboard').classList.add('hidden');
+      document.getElementById('loginBox').classList.remove('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+
+    function showPage(page) {
+      const content = document.getElementById("content");
+      let html = '';
+
+      if (page === "inventory") {
+        html = `
+          <div class="main-content">
+            <table class="inventory-table">
+              <thead>
+                <tr>
+                  <th>PRODNUM</th>
+                  <th>PRODNAME</th>
+                  <th>TYPE</th>
+                  <th>STOCK</th>
+                  <th>PRICE</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-body">
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+
+            <div class="forms-container">
+              <div class="form-card">
+                <h3>ADD ITEM</h3>
+                <form id="add-item-form">
+                  <div class="form-group">
+                    <label for="add-date">Date</label>
+                    <input type="text" id="date">
+                  </div>
+                  <div class="form-group">
+                    <label for="item-type">Item Type</label>
+                    <input type="text" id="item-type">
+                  </div>
+                  <div class="form-group">
+                    <label for="add-name">Item Name</label>
+                    <input type="text" id="add-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="add-quantity">Quantity</label>
+                    <input type="number" id="add-quantity" min="1">
+                  </div>
+                  <div class="form-group">
+                    <label for="add-price">Price Per Item</label>
+                    <input type="number" id="add-price" step="0.01" min="0">
+                  </div>
+                  <button type="submit" class="btn">Confirm</button>
+                </form>
+              </div>
+
+              <div class="form-card">
+                <h3>DELETE ITEM</h3>
+                <form id="delete-item-form">
+                  <div class="form-group">
+                    <label for="delete-date">Date</label>
+                    <input type="text" id="delete-date">
+                  </div>
+                  <div class="form-group">
+                    <label for="delete-type">Item Type</label>
+                    <input type="text" id="delete-type">
+                  </div>
+                  <div class="form-group">
+                    <label for="delete-name">Item Name</label>
+                    <input type="text" id="delete-name">
+                  </div>
+                  <button type="submit" class="btn">Confirm</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (page === "record") {
+        html = `<h1>Record</h1><p>This is the record section.</p>`;
+      } else {
+        html = `<h1>DELI</h1><h2>CREAM</h2><p>Ice cream, you scream!</p>`;
+      }
+
+      content.classList.remove('fade');
+      void content.offsetWidth;
+      content.classList.add('fade');
+      content.innerHTML = html;
+
+      // reattach listeners
+      if (page === "inventory") {
+        const addItemForm = document.getElementById('add-item-form');
+        const deleteItemForm = document.getElementById('delete-item-form');
+
+        if (addItemForm) {
+          addItemForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Item added (not yet functional)");
+          });
+        }
+
+        if (deleteItemForm) {
+          deleteItemForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Item deleted (not yet functional)");
+          });
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+

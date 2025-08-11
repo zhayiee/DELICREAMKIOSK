@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - CREAM DELI</title>
+    <link rel="stylesheet" href="stock.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="menu-item"><a href="menu.html">DASHBOARD</a></div>
+        <div class="menu-item" id="inventory"><a href="inventory.html">INVENTORY</a></div>
+        <div class="menu-item"><a href="record.html">RECORD</a></div>
+    </div>
+
+    <div class="content" id="inventory-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>PRODNUM</th>
+                    <th>PRODNAME</th>
+                    <th>TYPE</th>
+                    <th>STOCK</th>
+                    <th>PRICE</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Inventory rows go here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Flash effect when inventory is clicked
+        document.getElementById('inventory').addEventListener('click', function () {
+            const content = document.getElementById('inventory-content');
+            content.classList.add('flash');
+            setTimeout(() => content.classList.remove('flash'), 500);
+        });
+    </script>
+</body>
+</html>

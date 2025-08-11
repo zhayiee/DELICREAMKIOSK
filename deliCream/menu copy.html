@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu - Deli Cream</title>
+  <link rel="stylesheet" href="../bootstrap-5.0.2-dist/css/bootstrap.min.css" />
+  <style>
+    body {
+      background-color: #fff8f0;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+    }
+
+    .menu-container {
+      padding: 2rem;
+    }
+
+    .menu-title {
+      font-size: 3rem;
+      color: #6b3e26;
+      margin-bottom: 2rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .menu-item {
+      background-color: #ffe5d9;
+      border-radius: 15px;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-item img {
+      max-width: 100px;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-item p {
+      font-size: 1.2rem;
+      color: #4b2e1e;
+      margin: 0;
+    }
+
+    .menu-item a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .back-button {
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container">
+    <h1 class="menu-title">MENU</h1>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <a href="flavor.html">
+          <img src="flavor.png" alt="Flavor" />
+          <p>Flavor</p>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="cones-cups.html">
+          <img src="cones-cups.png" alt="Cones & Cups" />
+          <p>Cones & Cups</p>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="toppings.html">
+          <img src="toppings.png" alt="Toppings" />
+          <p>Toppings</p>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="addons.html">
+          <img src="addons.png" alt="Add-ons" />
+          <p>Add-ons</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Back to Start Button -->
+    <div class="back-button">
+      <a href="start.htm" class="btn btn-outline-primary">← Back to Start</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deli Cream</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('images/bg.png') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 80px 60px;
+      border-radius: 40px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      width: 100%;
+      border: 4px dashed #ffcad4;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 4rem;
+      color: #e75480;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px #ffd1dc;
+    }
+
+    .start-btn {
+      display: inline-block;
+      background-color: #ff99ac;
+      color: white;
+      font-size: 1.5rem;
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: 0.3s ease;
+      box-shadow: 0 8px 16px rgba(255, 153, 172, 0.4);
+      font-weight: 600;
+    }
+
+    .start-btn:hover {
+      background-color: #ff7e94;
+      transform: scale(1.08);
+    }
+
+    .cta {
+      margin-top: 20px;
+      color: #555;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 50px 30px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+
+      .start-btn {
+        font-size: 1.2rem;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Deli Cream</h1>
+    <a href="option.php" class="start-btn">🍦 Tap here to start</a>
+    <p class="cta">Ice Cream, You Scream!</p>
+  </div>
+</body>
+</html>
+
+

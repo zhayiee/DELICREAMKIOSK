@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #ffe3ef;
+  }
+  
+  .menu-container {
+    width: 320px;
+    height: 540px;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    overflow: hidden;
+    background-color: #ffe3ef;
+  }
+  
+  .drip-header {
+    background: url('chocolate-drip.png') no-repeat center top;
+    background-size: cover;
+    height: 120px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .menu-title {
+    margin: 0;
+    padding-top: 40px;
+    font-size: 38px;
+    color: #ff69b4;
+    text-shadow: 2px 2px 0 #fff;
+    font-weight: bold;
+  }
+  
+  .menu-section {
+    display: none;
+  }
+  .menu-section.active {
+    display: block;
+  }
+  
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  .menu-item {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 120px;
+    height: 120px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    padding-top: 10px;
+  }
+  
+  .menu-item img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .menu-item p {
+    margin: 10px 0 0;
+    font-size: 16px;
+    color: #d2691e;
+    font-weight: bold;
+  }
+  
