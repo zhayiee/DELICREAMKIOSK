@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cream Deli</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-  <!-- jsPDF libraries for record page PDF export kahit ano -->
+  <!-- jsPDF libraries for record page PDF export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <style>
@@ -112,8 +112,8 @@
       flex: 1;
       background-color: #ffe4ec;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: flex-start;
       flex-direction: column;
       text-align: center;
       padding: 20px;
@@ -138,18 +138,48 @@
     .inventory-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 3px;
+      margin-bottom: 20px;
     }
     .inventory-table th, .inventory-table td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: center;
     }
-    .forms-container {
+    .low-stock {
+      color: red;
+      font-weight: bold;
+    }
+    .low-stock-row {
+      background-color: #ffe6e6;
+    }
+    .action-buttons {
       display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .action-button {
+      padding: 15px 25px;
+      background: white;
+      border: 2px solid #FF9EB5;
+      border-radius: 8px;
+      color: #FF6B8B;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .action-button:hover {
+      background-color: #fff0f3;
+    }
+    .action-button.active {
+      background-color: #FF6B8B;
+      color: white;
+    }
+    .forms-container {
+      display: none;
       gap: 30px;
       flex-wrap: wrap;
       justify-content: center;
+      margin-top: 20px;
     }
     .form-card {
       background: white;
@@ -201,6 +231,10 @@
       animation: fadeIn 0.5s ease;
     }
     /* Additional styles for record page */
+    .main-content {
+      width: 100%;
+      padding: 20px;
+    }
     .main-content h1 {
       color: #FF6B8B;
       margin-bottom: 15px;
@@ -344,6 +378,95 @@
       margin-bottom: 15px;
       font-weight: bold;
     }
+    
+    /* Modal styles for low stock alert */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #f44336;
+      border-radius: 10px;
+      width: 50%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .modal-title {
+      color: #f44336;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close:hover {
+      color: #f44336;
+    }
+    .modal-body {
+      margin-bottom: 20px;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .modal-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .modal-btn-primary {
+      background-color: #f44336;
+      color: white;
+    }
+    .modal-btn-primary:hover {
+      background-color: #d32f2f;
+    }
+    .modal-btn-secondary {
+      background-color: #f1f1f1;
+      color: #333;
+    }
+    .modal-btn-secondary:hover {
+      background-color: #ddd;
+    }
+    .low-stock-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+    .low-stock-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .low-stock-list li:last-child {
+      border-bottom: none;
+    }
   </style>
 </head>
 <body>
@@ -373,6 +496,25 @@
       <p>Ice cream, you scream!</p>
     </div>
   </div>
+  
+  <!-- Low Stock Alert Modal -->
+  <div id="lowStockModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚠️ LOW STOCK ALERT ⚠️</h3>
+        <span class="close" onclick="closeLowStockModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>The following items need to be restocked immediately:</p>
+        <ul id="lowStockList" class="low-stock-list"></ul>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="closeLowStockModal()">Close</button>
+        <button class="modal-btn modal-btn-primary" onclick="restockItems()">Restock Items</button>
+      </div>
+    </div>
+  </div>
+  
   <!-- SCRIPT -->
   <script>
     function login() {
@@ -398,11 +540,12 @@
       if (page === "inventory") {
         html = `
           <div class="main-content">
+            <h1 style="color:#FF6B8B; margin-bottom:15px; text-align:left;">INVENTORY</h1>
+            
             <table class="inventory-table">
               <thead>
                 <tr>
-                  <th>PRODNUM</th>
-                  <th>PRODNAME</th>
+                  <th>PRODUCTNAME</th>
                   <th>TYPE</th>
                   <th>STOCK</th>
                   <th>PRICE</th>
@@ -410,13 +553,20 @@
                 </tr>
               </thead>
               <tbody id="inventory-table-body">
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>Vanilla Ice Cream</td><td>Ice Cream</td><td>3</td><td>4.50</td><td>In Stock</td></tr>
+                <tr><td>Chocolate Cone</td><td>Ice Cream</td><td>10</td><td>3.00</td><td>In Stock</td></tr>
+                <tr><td>Strawberry Scoop</td><td>Ice Cream</td><td>2</td><td>5.00</td><td>In Stock</td></tr>
+                <tr><td>Mint Chips</td><td>Ice Cream</td><td>7</td><td>3.50</td><td>In Stock</td></tr>
               </tbody>
             </table>
-            <div class="forms-container">
+            
+            <div class="action-buttons">
+              <button class="action-button" id="add-item-btn">ADD ITEM</button>
+              <button class="action-button" id="delete-item-btn">DELETE ITEM</button>
+              <button class="action-button" id="check-low-stock-btn">CHECK LOW STOCK</button>
+            </div>
+            
+            <div class="forms-container" id="forms-container">
               <div class="form-card">
                 <h3>ADD ITEM</h3>
                 <form id="add-item-form">
@@ -838,20 +988,141 @@
       // Note: for record, content.innerHTML is set inside that block because of async bindings
       // Reattach inventory form listeners, if on inventory page:
       if (page === "inventory") {
+        // Add item button functionality
+        const addItemBtn = document.getElementById('add-item-btn');
+        const deleteItemBtn = document.getElementById('delete-item-btn');
+        const checkLowStockBtn = document.getElementById('check-low-stock-btn');
+        const formsContainer = document.getElementById('forms-container');
+        
+        addItemBtn.onclick = function() {
+          // Reset button styles
+          document.querySelectorAll('.action-button').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // Show forms container
+          formsContainer.style.display = 'flex';
+          
+          // Hide delete form and show add form
+          document.getElementById('add-item-form').parentElement.style.display = 'block';
+          document.getElementById('delete-item-form').parentElement.style.display = 'none';
+        };
+        
+        deleteItemBtn.onclick = function() {
+          // Reset button styles
+          document.querySelectorAll('.action-button').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // Show forms container
+          formsContainer.style.display = 'flex';
+          
+          // Hide add form and show delete form
+          document.getElementById('add-item-form').parentElement.style.display = 'none';
+          document.getElementById('delete-item-form').parentElement.style.display = 'block';
+        };
+        
+        // Check low stock button functionality
+        checkLowStockBtn.onclick = function() {
+          const table = document.getElementById('inventory-table-body');
+          const rows = table.getElementsByTagName('tr');
+          let lowStockItems = [];
+          
+          // Remove previous low stock row highlighting
+          for (let i = 0; i < rows.length; i++) {
+            rows[i].classList.remove('low-stock-row');
+          }
+          
+          // Check each item's stock
+          for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            if (cells.length >= 3) {
+              const productName = cells[0].textContent;
+              const stock = parseInt(cells[2].textContent);
+              
+              // Consider items with less than 5 units as low stock
+              if (stock < 5) {
+                lowStockItems.push(productName);
+                // Update status to "Low Stock" and make it red
+                cells[4].textContent = "Low Stock";
+                cells[4].className = "low-stock";
+                // Highlight the row with light red background
+                rows[i].classList.add('low-stock-row');
+              } else {
+                // Update status to "In Stock"
+                cells[4].textContent = "In Stock";
+                cells[4].className = "";
+              }
+            }
+          }
+          
+          // Show modal if there are low stock items
+          if (lowStockItems.length > 0) {
+            showLowStockModal(lowStockItems);
+          } else {
+            alert("✅ Good news! All items have sufficient stock. No restocking needed at this time.");
+          }
+        };
+        
+        // Form submission handlers
         const addItemForm = document.getElementById('add-item-form');
         const deleteItemForm = document.getElementById('delete-item-form');
+        
         if (addItemForm) {
           addItemForm.addEventListener('submit', function(e) {
             e.preventDefault();
             alert("Item added (not yet functional)");
           });
         }
+        
         if (deleteItemForm) {
           deleteItemForm.addEventListener('submit', function(e) {
             e.preventDefault();
             alert("Item deleted (not yet functional)");
           });
         }
+      }
+    }
+    
+    // Function to show low stock modal
+    function showLowStockModal(lowStockItems) {
+      const modal = document.getElementById('lowStockModal');
+      const lowStockList = document.getElementById('lowStockList');
+      
+      // Clear previous list items
+      lowStockList.innerHTML = '';
+      
+      // Add each low stock item to the list
+      lowStockItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        lowStockList.appendChild(li);
+      });
+      
+      // Show the modal
+      modal.style.display = 'block';
+    }
+    
+    // Function to close low stock modal
+    function closeLowStockModal() {
+      const modal = document.getElementById('lowStockModal');
+      modal.style.display = 'none';
+    }
+    
+    // Function to handle restock button click
+    function restockItems() {
+      closeLowStockModal();
+      // Here you would typically navigate to a restocking form or process
+      alert("Restocking process would start here. This feature is not yet implemented.");
+    }
+    
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('lowStockModal');
+      if (event.target == modal) {
+        closeLowStockModal();
       }
     }
   </script>

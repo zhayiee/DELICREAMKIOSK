@@ -1,0 +1,31 @@
+User ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardUser ID: 1, Username: test, Role: staff accessed dashboardPOST data: Array
+(
+    [username] => test
+    [password] => 12345678
+    [confirm_password] => 12345678
+    [role] => staff
+)
+POST data: Array
+(
+    [username] => nimfa
+    [password] => 12345678
+    [confirm_password] => 12345678
+    [role] => staff
+)
+POST data: Array
+(
+    [username] => nimfa
+    [password] => 12345678
+)
+User ID: 2, Username: nimfa, Role: staff accessed dashboardSession variables missing or user not logged in: Array
+(
+    [redirect_count] => 1
+)
+Session variables missing or user not logged in: Array
+(
+    [redirect_count] => 1
+)
+Session variables missing or user not logged in: Array
+(
+    [redirect_count] => 1
+)
